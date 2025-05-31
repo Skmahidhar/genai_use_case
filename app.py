@@ -37,7 +37,7 @@ summaries = [
 ]
 
 # Sidebar Branding
-st.sidebar.image("https://www.freepik.com/free-vector/cute-grandfather-reading-newspaper-cartoon-vector-icon-illustration-people-education-isolated-flat_70824427.html", width=100)
+st.sidebar.image("https://raw.githubusercontent.com/Skmahidhar/genai_use_case/main/news.png", width=100)
 st.sidebar.title("🧓 CynicalCapital")
 st.sidebar.caption("where snark meets markets")
 
