@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Sample Data
 summaries = [
@@ -52,21 +50,16 @@ for item in filtered:
 # Convert to DataFrame for plotting
 df = pd.DataFrame(summaries)
 
-# Pie Chart - Category Breakdown
+# Category Breakdown - Bar Chart
 st.subheader("📊 Article Category Breakdown")
-category_counts = df['category'].value_counts()
-fig1, ax1 = plt.subplots()
-ax1.pie(category_counts, labels=category_counts.index, autopct='%1.1f%%', startangle=90)
-ax1.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
-st.pyplot(fig1)
+category_df = df['category'].value_counts().reset_index()
+category_df.columns = ['Category', 'Count']
+st.bar_chart(category_df.set_index('Category'))
 
-# Bar Chart - Source Count
+# Source Count - Bar Chart
 st.subheader("📈 Article Count by Source")
-source_counts = df['source'].value_counts().reset_index()
-source_counts.columns = ['Source', 'Count']
-fig2, ax2 = plt.subplots()
-sns.barplot(x='Source', y='Count', data=source_counts, ax=ax2)
-ax2.set_title('Articles per News Source')
-st.pyplot(fig2)
+source_df = df['source'].value_counts().reset_index()
+source_df.columns = ['Source', 'Count']
+st.bar_chart(source_df.set_index('Source'))
 
 st.caption("🔁 This is a prototype using mock data. GPT/News API integration can be added.")
