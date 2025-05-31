@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Sample Data
 summaries = [
@@ -39,7 +40,7 @@ st.markdown("Get macroeconomic summaries and analytics using GenAI.")
 search_query = st.text_input("Search for news by keyword", "")
 filtered = [item for item in summaries if search_query.lower() in item['title'].lower()]
 
-# Summary Cards as Slider
+# Summary Cards as Expander
 st.subheader("Summarized News")
 for item in filtered:
     with st.expander(f"{item['title']} - {item['source']}"):
@@ -53,16 +54,19 @@ df = pd.DataFrame(summaries)
 
 # Pie Chart - Category Breakdown
 st.subheader("📊 Article Category Breakdown")
-category_counts = df['category'].value_counts().reset_index()
-category_counts.columns = ['Category', 'Count']
-fig_pie = px.pie(category_counts, values='Count', names='Category', title='Distribution by Category')
-st.plotly_chart(fig_pie, use_container_width=True)
+category_counts = df['category'].value_counts()
+fig1, ax1 = plt.subplots()
+ax1.pie(category_counts, labels=category_counts.index, autopct='%1.1f%%', startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+st.pyplot(fig1)
 
 # Bar Chart - Source Count
 st.subheader("📈 Article Count by Source")
 source_counts = df['source'].value_counts().reset_index()
 source_counts.columns = ['Source', 'Count']
-fig_bar = px.bar(source_counts, x='Source', y='Count', title='Articles per News Source')
-st.plotly_chart(fig_bar, use_container_width=True)
+fig2, ax2 = plt.subplots()
+sns.barplot(x='Source', y='Count', data=source_counts, ax=ax2)
+ax2.set_title('Articles per News Source')
+st.pyplot(fig2)
 
 st.caption("🔁 This is a prototype using mock data. GPT/News API integration can be added.")
