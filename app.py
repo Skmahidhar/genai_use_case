@@ -38,8 +38,8 @@ summaries = [
 
 # Sidebar Branding
 st.sidebar.image("https://raw.githubusercontent.com/Skmahidhar/genai_use_case/main/news.png", width=100)
-st.sidebar.title("🧓 CynicalCapital")
-st.sidebar.caption("where snark meets markets")
+st.sidebar.title("CynicalCapital")
+st.sidebar.caption("Daily Snark, Serious Finance")
 
 # Navigation
 page = st.sidebar.radio("Navigate", ["📊 Dashboard", "📄 Article Details"])
