@@ -37,7 +37,7 @@ summaries = [
 ]
 
 # Sidebar Branding
-st.sidebar.image("https://www.freepik.com/free-vector/cute-grandfather-reading-newspaper-cartoon-vector-icon-illustration-people-education-isolated-flat_70824427.htm#from_element=cross_selling__vector", width=100)
+st.sidebar.image("https://www.freepik.com/free-vector/cute-grandfather-reading-newspaper-cartoon-vector-icon-illustration-people-education-isolated-flat_70824427.html", width=100)
 st.sidebar.title("🧓 CynicalCapital")
 st.sidebar.caption("where snark meets markets")
 
