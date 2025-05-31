@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 import datetime
 
@@ -36,67 +36,67 @@ summaries = [
     }
 ]
 
-# Sidebar Logo
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", width=100)
-st.sidebar.title("GenAI News")
+# Sidebar Branding
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Old_man_reading_newspaper_drawing.png/480px-Old_man_reading_newspaper_drawing.png", width=100)
+st.sidebar.title("🧓 CynicalCapital")
+st.sidebar.caption("where snark meets markets")
 
 # Navigation
-page = st.sidebar.radio("Go to", ["Dashboard", "Article Details"])
+page = st.sidebar.radio("Navigate", ["📊 Dashboard", "📄 Article Details"])
 
-# Shared DataFrame
+# Convert to DataFrame
 df = pd.DataFrame(summaries)
 
-if page == "Dashboard":
-    # Page Title
-    st.title("📰 GenAI Macro News Dashboard")
-    st.markdown("Get macroeconomic summaries and analytics using GenAI.")
+if page == "📊 Dashboard":
+    # Header
+    st.title("📰 CynicalCapital – Daily Snark, Serious Finance")
+    st.markdown("Welcome, finance minions. Get your dose of macro insights without the fluff.")
 
-    # Search Input
-    search_query = st.text_input("Search for news by keyword", "")
+    # Search Bar
+    search_query = st.text_input("🔍 Filter by keyword", "")
     filtered = [item for item in summaries if search_query.lower() in item['title'].lower()]
 
-    # Summary Cards as Expander
-    st.subheader("Summarized News")
+    # Summary Cards
+    st.subheader("🧾 Curated Summaries")
     for item in filtered:
-        with st.expander(f"{item['title']} - {item['source']}"):
-            st.markdown(f"**Summary:** {item['summary']}")
+        with st.expander(f"{item['title']} | {item['source']}"):
             st.markdown(f"**Date:** {item['date']}")
-            st.markdown(f"**Link:** [Read Original Article]({item['link']})")
-            if st.button(f"Open Details - {item['id']}"):
+            st.markdown(f"**Summary:** {item['summary']}")
+            st.markdown(f"[Read Full Article]({item['link']})")
+            if st.button(f"🔎 Details – ID {item['id']}"):
                 st.session_state['selected_article_id'] = item['id']
                 st.experimental_rerun()
 
-    # Charts
-    st.subheader("📊 Article Category Breakdown")
+    # Data Visualizations
+    st.subheader("📈 Breakdown by Category")
     category_df = df['category'].value_counts().reset_index()
     category_df.columns = ['Category', 'Count']
     st.bar_chart(category_df.set_index('Category'))
 
-    st.subheader("📈 Article Count by Source")
+    st.subheader("🗞️ Source Distribution")
     source_df = df['source'].value_counts().reset_index()
     source_df.columns = ['Source', 'Count']
     st.bar_chart(source_df.set_index('Source'))
 
-    st.caption("🔁 This is a prototype using mock data. GPT/News API integration can be added.")
+    st.caption("⚠️ This is a prototype with mock data. Real-time GPT/News API coming soon.")
 
-elif page == "Article Details":
-    st.title("📄 Article Details")
+elif page == "📄 Article Details":
+    st.title("📄 Deep Dive")
     if 'selected_article_id' in st.session_state:
         article_id = st.session_state['selected_article_id']
         article = next((item for item in summaries if item['id'] == article_id), None)
-        if article:
-            st.markdown(f"## {article['title']}")
-            st.markdown(f"**Date:** {article['date']}")
-            st.markdown(f"**Source:** {article['source']}")
-            st.markdown(f"**Summary:** {article['summary']}")
-            st.markdown(f"**Full Text:** {article['fullText']}")
-            st.markdown(f"🔗 [Visit Original Article]({article['link']})")
 
-            # Chart for Article Context (Dummy Example)
-            st.subheader("📊 Related Category Context")
-            category_count = df['category'].value_counts()
-            st.bar_chart(category_count)
+        if article:
+            st.header(article['title'])
+            st.markdown(f"**📅 Date:** {article['date']}")
+            st.markdown(f"**📰 Source:** {article['source']}")
+            st.markdown(f"**📌 Summary:** {article['summary']}")
+            st.markdown(f"**🧠 Full Text:** {article['fullText']}")
+            st.markdown(f"[🔗 Original Article]({article['link']})")
+
+            st.subheader("📊 Related Categories")
+            st.bar_chart(df['category'].value_counts())
         else:
-            st.warning("Article not found.")
+            st.warning("❌ Article not found.")
     else:
-        st.info("Go back and select an article to view details.")
+        st.info("👈 Go back and pick an article, banker.")
